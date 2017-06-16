@@ -1,5 +1,17 @@
 YourlsWhiteListDomains
 
+A fork of  https://github.com/Panthro/YourlsWhitelistDomains which was a fork of https://github.com/LudoBoggio/YourlsBlacklistIPs.
+
+Changes:
+
+* white list does not apply if logged in as admin
+* more accurate white list checking
+* subdomains of white list entries are allowed
+* whitelist is stored internally as an array of strings instead of a single string.
+
+Previous README contents:
+
+
 Plugin for Yourls allowing only whitelisted domains
 
 This plugin is intended to be used with YOURLS (cf. http://yourls.org)
