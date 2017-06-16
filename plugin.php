@@ -12,16 +12,19 @@ Author URI: http://passeionaweb.com.br
 if( !defined( 'YOURLS_ABSPATH' ) ) die();
 
 // Hook the custom function into the 'pre_check_domain_flood' event
-yourls_add_filter( 'shunt_add_new_link', 'panthro_whitelist_domain_root' );
+if (!yourls_is_admin())
+	yourls_add_filter( 'shunt_add_new_link', 'panthro_whitelist_domain_root' );
 
 // Hook the admin page into the 'plugins_loaded' event
 yourls_add_action( 'plugins_loaded', 'panthro_whitelist_domain_add_page' );
 
 // Get whitelisted domains from YOURLS options feature and compare with current domain address
 function panthro_whitelist_domain_root ( $bol, $url ) {
-	$parse = parse_url($url);
-	$domain = str_ireplace('www.', '', parse_url($url, PHP_URL_HOST));
 	$return = false;
+
+	//if (yourls_is_admin()) return $return;
+
+	$domain = str_ireplace('www.', '', parse_url($url, PHP_URL_HOST));
 	$domain_list = yourls_get_option ('panthro_whitelist_domain_list');
 	if ( $domain_list ) {
 		$domain_list_display = unserialize ( $domain_list );
