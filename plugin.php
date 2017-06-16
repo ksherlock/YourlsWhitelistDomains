@@ -58,7 +58,7 @@ function panthro_whitelist_domain_root ( $bol, $url ) {
 			// exact match
 			if ($domain === $needle) return false;
 			// domain = www.example.com, $needle == example.com
-			$needle = ".$needle"
+			$needle = ".$needle";
 			if (substr($domain, -strlen($needle)) === $needle) return false;
 		}
 	}
