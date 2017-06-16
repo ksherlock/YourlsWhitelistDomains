@@ -39,7 +39,7 @@ function panthro_domain_list() {
 	$list = unserialize($list);
 	if (is_array($list)) return $list;
 	
-	return panthrow_string_to_list($list);
+	return panthro_string_to_list($list);
 }
 
 
