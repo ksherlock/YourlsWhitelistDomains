@@ -20,22 +20,28 @@ yourls_add_action( 'plugins_loaded', 'panthro_whitelist_domain_add_page' );
 
 // Get whitelisted domains from YOURLS options feature and compare with current domain address
 function panthro_whitelist_domain_root ( $bol, $url ) {
-	$return = false;
 
 	//if (yourls_is_admin()) return $return;
 
-	$domain = str_ireplace('www.', '', parse_url($url, PHP_URL_HOST));
+	$domain = strtolower(parse_url($url, PHP_URL_HOST));
 	$domain_list = yourls_get_option ('panthro_whitelist_domain_list');
 	if ( $domain_list ) {
-		$domain_list_display = unserialize ( $domain_list );
-		//if (!in_array($domain, $domain_list_display)) {
-		if (strpos($domain_list_display,$domain) === false) {
-			$return['status']    = 'fail';
-			$return['code']      = 'error:domain-not-allowed';
-			$return['message']   = 'This domain is not allowed';
-			$return['errorCode'] = '400';
+		$domain_list = unserialize ( $domain_list );
+
+		foreach ($domain_list as $needle) {
+			if ($needle === "") continue;
+			// exact match
+			if ($domain === $needle) return false;
+			// domain = www.example.com, $needle == example.com
+			$needle = ".$needle"
+			if (substr($domain, -strlen($needle)) === $needle) return false;
 		}
 	}
+
+	$return['status']    = 'fail';
+	$return['code']      = 'error:domain-not-allowed';
+	$return['message']   = 'This domain is not allowed';
+	$return['errorCode'] = '400';
 	return $return;
 }
 
