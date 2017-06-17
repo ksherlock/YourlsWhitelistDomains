@@ -89,7 +89,7 @@ function panthro_whitelist_domain_do_page () {
 function panthro_whitelist_domain_form () {
 	$nonce = yourls_create_nonce( 'whitelist_domain' ) ;
 	$domain_list = panthro_domain_list();
-	$domain_list_display = htmlspecialchars(implode("\r\n", $domain_list), ENT_NOQUOTES);
+	$domain_list_display = yourls_esc_textarea(implode("\r\n", $domain_list));
 
 	echo <<<HTML
 		<h2> WhiteList domains</h2>
