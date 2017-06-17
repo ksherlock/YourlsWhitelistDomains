@@ -36,7 +36,6 @@ function panthro_domain_list() {
 	// return domain list as an array.
 	$list = yourls_get_option ('panthro_whitelist_domain_list', '');
 	if ($list === "") return array();
-	$list = unserialize($list);
 	if (is_array($list)) return $list;
 	
 	return panthro_string_to_list($list);
@@ -114,8 +113,7 @@ function panthro_whitelist_domain_process () {
 	// Check nonce
 	yourls_verify_nonce( 'whitelist_domain' ) ;
 	// Update list
-	$list = serialize(
-		($_POST['whitelist_form']));
+	$list = panthro_string_to_list( $_POST['whitelist_form'] );
 	yourls_update_option ( 'panthro_whitelist_domain_list',$list );
 	echo "White list updated" ;
 }
