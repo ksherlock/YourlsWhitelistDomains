@@ -47,11 +47,12 @@ function panthro_whitelist_domain_root ( $bol, $url ) {
 
 	//if (yourls_is_admin()) return $return;
 
+	$url = trim($url);
 	// make sure there's a protocol, add http:// if not
 	if ( ! yourls_get_protocol( $url ) )
 		$url = 'http://'.$url;	
 	
-	$domain = strtolower(parse_url($url, PHP_URL_HOST));
+	$domain = strtolower(@parse_url($url, PHP_URL_HOST));
 
 	$domain_list = panthro_domain_list();
 	if ( $domain_list ) {
